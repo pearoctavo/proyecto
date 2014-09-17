@@ -7,6 +7,7 @@
 package com.umariana.webappsVEAl.persistencia;
 
 import com.umariana.webappsVEAl.mundo.Linea;
+import com.umariana.webappsVEAl.mundo.Marca;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,12 +45,13 @@ public class LineaDAO {
     /**
     * metodo que agrega una linea a la base de datos
     * @param pLinea la linea. pLinea !=null
+    * @param pMarca la marca asosiada a la linea pMarca !=null
     * @throws Exception - La clase no se encuentra
     * @throws Exception - error de sentencia sql
     */
-    public void agregarLinea(Linea pLinea) throws ClassNotFoundException, SQLException
+    public void agregarLinea(Linea pLinea, Marca pMarca) throws ClassNotFoundException, SQLException
 	{
-		String sql = "Insert into linea (nombre) values('" + pLinea.getNombre()+"')";
+		String sql = "Insert into linea (nombre_linea, nombre_marca) values('" + pLinea.getNombre()+"', '" + pMarca.getNombreMarca()+")";
 		Connection miConexion = fachada.conectar();
 		if(miConexion != null)
 		{
@@ -70,7 +72,7 @@ public class LineaDAO {
     public ArrayList consultar(String pNombre) throws SQLException, ClassNotFoundException
 	{
 		ArrayList lasLineas = new ArrayList();
-		String sqlConsultar = "SELECT nombre FROM linea WHERE nombre='"+ pNombre +"'";
+		String sqlConsultar = "SELECT nombre_linea FROM linea WHERE nombre_linea='"+ pNombre +"'";
 		Connection miConexion = fachada.conectar();
 		if(miConexion != null)
 		{
@@ -97,7 +99,7 @@ public class LineaDAO {
     */
     public void modificarLinea(String pNombre) throws ClassNotFoundException, SQLException
 	{
-		String sql = "update linea set nombre='"+ pNombre +"' where nombre='"+ pNombre +"'";
+		String sql = "update linea set nombre_linea='"+ pNombre +"' where nombre_linea='"+ pNombre +"'";
 		Connection miConexion = fachada.conectar();
 		if(miConexion != null)
 		{
@@ -115,7 +117,7 @@ public class LineaDAO {
     */
     public void eliminarLinea(String pNombre) throws ClassNotFoundException, SQLException
 	{
-		String sql = "DELETE FROM linea Where nombre='"+pNombre+"'";
+		String sql = "DELETE FROM linea Where nombre_linea='"+pNombre+"'";
 		Connection miConexion = fachada.conectar();
 		if(miConexion != null)
 		{
