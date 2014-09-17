@@ -59,4 +59,71 @@ public class LineaDAO {
 		}
 		fachada.desconectar(miConexion);
 	}
+    
+       /**
+    * metodo que consulta una linea por su nombre
+    * @param pNombre nombre de la linea. nombre !="" and nombre !=null
+    * @return lasLineas
+    * @throws Exception - La clase no se encuentra
+    * @throws Exception - error de sentencia sql
+    */
+    public ArrayList consultar(String pNombre) throws SQLException, ClassNotFoundException
+	{
+		ArrayList lasLineas = new ArrayList();
+		String sqlConsultar = "SELECT nombre FROM linea WHERE nombre='"+ pNombre +"'";
+		Connection miConexion = fachada.conectar();
+		if(miConexion != null)
+		{
+
+			Statement instruccion = miConexion.createStatement();
+			ResultSet tabla = instruccion.executeQuery(sqlConsultar);
+			while(tabla.next())
+			{
+				Linea miLinea;
+                            miLinea = new Linea(tabla.getString("nombre"));
+				lasLineas.add(miLinea);
+			}
+
+		}
+		fachada.desconectar(miConexion);
+		return lasLineas;
+	}
+    
+    /**
+    * metodo que modifica una linea de la base de datos
+    * @param pNombre nombre de la Linea. nombre !="" and nombre !=null
+    * @throws Exception - La clase no se encuentra
+    * @throws Exception - error de sentencia sql
+    */
+    public void modificarLinea(String pNombre) throws ClassNotFoundException, SQLException
+	{
+		String sql = "update linea set nombre='"+ pNombre +"' where nombre='"+ pNombre +"'";
+		Connection miConexion = fachada.conectar();
+		if(miConexion != null)
+		{
+			Statement instruccion = (Statement) miConexion.createStatement();
+			int resultado = ((java.sql.Statement) instruccion).executeUpdate(sql);
+			miConexion.close();
+		}
+		fachada.desconectar(miConexion);
+	}
+        /**
+    * metodo que elimina una linea de la base de datos
+    * @param pNombre nombre de la linea. nombre !="" and nombre !=null
+    * @throws Exception - La clase no se encuentra
+    * @throws Exception - error de sentencia sql
+    */
+    public void eliminarLinea(String pNombre) throws ClassNotFoundException, SQLException
+	{
+		String sql = "DELETE FROM linea Where nombre='"+pNombre+"'";
+		Connection miConexion = fachada.conectar();
+		if(miConexion != null)
+		{
+			Statement instruccion = (Statement) miConexion.createStatement();
+			int resultado = ((java.sql.Statement) instruccion).executeUpdate(sql);
+			miConexion.close();
+		}
+		fachada.desconectar(miConexion);
+	}
+    
 }
