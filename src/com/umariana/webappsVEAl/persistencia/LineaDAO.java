@@ -82,7 +82,7 @@ public class LineaDAO {
 			while(tabla.next())
 			{
 				Linea miLinea;
-                            miLinea = new Linea(tabla.getString("nombre"));
+                            miLinea = new Linea(tabla.getString("nombre_linea"));
 				lasLineas.add(miLinea);
 			}
 
@@ -93,13 +93,14 @@ public class LineaDAO {
     
     /**
     * metodo que modifica una linea de la base de datos
-    * @param pNombre nombre de la Linea. nombre !="" and nombre !=null
+    * @param pNombre nombre de la Linea a buscar. nombre !="" and nombre !=null
+    * @param pNuevoNombre nuevo nombre de la Linea. nombre !="" and nombre !=null
     * @throws Exception - La clase no se encuentra
     * @throws Exception - error de sentencia sql
     */
-    public void modificarLinea(String pNombre) throws ClassNotFoundException, SQLException
+    public void modificarLinea(String pNombre, String pNuevoNombre) throws ClassNotFoundException, SQLException
 	{
-		String sql = "update linea set nombre_linea='"+ pNombre +"' where nombre_linea='"+ pNombre +"'";
+		String sql = "update linea set nombre_linea='"+ pNuevoNombre +"' where nombre_linea='"+ pNombre +"'";
 		Connection miConexion = fachada.conectar();
 		if(miConexion != null)
 		{

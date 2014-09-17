@@ -63,16 +63,16 @@ public class MarcaDAO {
 	}
     
        /**
-    * metodo que consulta una linea por su nombre
-    * @param pNombre nombre de la linea. nombre !="" and nombre !=null
-    * @return lasLineas
+    * metodo que consulta una marca por su nombre
+    * @param pNombre nombre de la marca. nombre !="" and nombre !=null
+    * @return lasMarcas
     * @throws Exception - La clase no se encuentra
     * @throws Exception - error de sentencia sql
     */
     public ArrayList consultar(String pNombre) throws SQLException, ClassNotFoundException
 	{
-		ArrayList lasLineas = new ArrayList();
-		String sqlConsultar = "SELECT nombre FROM linea WHERE nombre='"+ pNombre +"'";
+		ArrayList lasMarcas = new ArrayList();
+		String sqlConsultar = "SELECT nombre_marca FROM marca WHERE nombre_marca='"+ pNombre +"'";
 		Connection miConexion = fachada.conectar();
 		if(miConexion != null)
 		{
@@ -81,25 +81,27 @@ public class MarcaDAO {
 			ResultSet tabla = instruccion.executeQuery(sqlConsultar);
 			while(tabla.next())
 			{
-				Linea miLinea;
-                            miLinea = new Linea(tabla.getString("nombre"));
-				lasLineas.add(miLinea);
+				Marca miMarca;
+                            miMarca = new Marca(tabla.getString("nombre_marca"),tabla.getString("pais_origen"));
+				lasMarcas.add(miMarca);
 			}
 
 		}
 		fachada.desconectar(miConexion);
-		return lasLineas;
+		return lasMarcas;
 	}
     
     /**
-    * metodo que modifica una linea de la base de datos
-    * @param pNombre nombre de la Linea. nombre !="" and nombre !=null
+    * metodo que modifica una marca de la base de datos
+    * @param pNombre nombre de la marca a buscar. nombre !="" and nombre !=null
+    * @param pNuevoNombre nuevo nombre de la marca. nombre !="" and nombre !=null
+    * @param pPais pais de la marca. pais !="" and pais !=null
     * @throws Exception - La clase no se encuentra
     * @throws Exception - error de sentencia sql
     */
-    public void modificarLinea(String pNombre) throws ClassNotFoundException, SQLException
+    public void modificarLinea(String pNombre, String pNuevoNombre, String pPais) throws ClassNotFoundException, SQLException
 	{
-		String sql = "update linea set nombre='"+ pNombre +"' where nombre='"+ pNombre +"'";
+		String sql = "update marca set nombre_marca='"+ pNuevoNombre +"', pais_origen='"+ pPais +"' where nombre_marca='"+ pNombre +"'";
 		Connection miConexion = fachada.conectar();
 		if(miConexion != null)
 		{
@@ -110,14 +112,14 @@ public class MarcaDAO {
 		fachada.desconectar(miConexion);
 	}
         /**
-    * metodo que elimina una linea de la base de datos
-    * @param pNombre nombre de la linea. nombre !="" and nombre !=null
+    * metodo que elimina una marca de la base de datos
+    * @param pNombre nombre de la marca. nombre !="" and nombre !=null
     * @throws Exception - La clase no se encuentra
     * @throws Exception - error de sentencia sql
     */
-    public void eliminarLinea(String pNombre) throws ClassNotFoundException, SQLException
+    public void eliminarMarca(String pNombre) throws ClassNotFoundException, SQLException
 	{
-		String sql = "DELETE FROM linea Where nombre='"+pNombre+"'";
+		String sql = "DELETE FROM marca Where nombre_marca='"+pNombre+"'";
 		Connection miConexion = fachada.conectar();
 		if(miConexion != null)
 		{
