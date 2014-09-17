@@ -68,7 +68,7 @@ public class Vehiculo
     * @param pModelo modelo del vehiculo. modelo !="" and modelo !=null
     * @param pPlaca placa del vehiculo. placa !="" and placa !=null
     */
-    public Vehiculo(double pCosto, String pImagen, Linea pLinea, Marca pMarca, String pModelo, String pPlaca )
+    public Vehiculo(double pCosto, String pImagen, String pLinea, String pMarca, String pModelo, String pPlaca )
     {
 
     }
